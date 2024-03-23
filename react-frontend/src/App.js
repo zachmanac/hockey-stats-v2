@@ -42,7 +42,8 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            <tr>
+            {data.map((data, index) => (
+            <tr key={index}>
               <td>{data.data[0].skaterFullName}</td>
               <td>{data.data[0].gamesPlayed}</td>
               <td>{data.data[0].goals}</td>
@@ -57,6 +58,7 @@ function App() {
               <td>{data.data[0].shGoals}</td>
               <td>{data.data[0].gameWinningGoals}</td>
             </tr>
+            ))}
           </tbody>
         </table>
       </header>
