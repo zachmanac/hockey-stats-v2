@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const baseURL = 'http://localhost:8000/';
+
 async function getTest() {
   try {
-    const response = await axios.get('http://localhost:8000');
+    const response = await axios.get(`${baseURL}`);
     console.log(response);
     return response;
   } catch (error) {
