@@ -43,6 +43,7 @@ const columns = [
     field: 'points',
     headerName: 'Points',
     type: 'number',
+    valueGetter: (value, row) => ((row.goals || 0 )+ (row.assists || 0)),
     width: 80
   },
 ];
