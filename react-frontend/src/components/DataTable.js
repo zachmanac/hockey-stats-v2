@@ -1,7 +1,7 @@
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
+// import data from './mockData';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
   { field: 'firstName', headerName: 'First name', width: 130 },
   { field: 'lastName', headerName: 'Last name', width: 130 },
   {
@@ -18,18 +18,43 @@ const columns = [
     width: 160,
     valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
   },
+  {
+    field: 'gamesPlayed',
+    headerName: 'Games Played',
+    type: 'number',
+    sortable: false,
+    width: 150
+  },
+  {
+    field: 'goals',
+    headerName: 'Goals',
+    type: 'number',
+    width: 80
+  },
+  {
+    field: 'assists',
+    headerName: 'Assists',
+    type: 'number',
+    width: 80
+  },
+  {
+    field: 'points',
+    headerName: 'Points',
+    type: 'number',
+    width: 80
+  },
 ];
 
 const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35, gamesPlayed: 82, goals: 45, assists: 20, points: 65 },
+  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42, gamesPlayed: 82, goals: 12, assists: 46, points: 63 },
+  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45, gamesPlayed: 59, goals: 32, assists: 21, points: 89 },
+  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16, gamesPlayed: 78, goals: 11, assists: 25, points: 36 },
+  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null, gamesPlayed: 81, goals: 24, assists: 27, points: 52 },
+  { id: 6, lastName: 'Melisandre', firstName: null, age: 150, gamesPlayed: 76, goals: 35, assists: 47, points: 72 },
+  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44, gamesPlayed: 82, goals: 38, assists: 27, points: 69 },
+  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36, gamesPlayed: 76, goals: 45, assists: 20, points: 65 },
+  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65, gamesPlayed: 80, goals: 52, assists: 21, points: 76 },
 ];
 
 export default function DataTable() {
