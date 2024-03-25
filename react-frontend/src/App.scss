@@ -4,7 +4,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  max-height: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,22 +12,4 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding: 25px;
-}
-
-.table {
-  width: 85%;
-  font-size: 30px;
-  border: 1px solid #9dc7ff;
-  border-radius: 10px;
-  white-space: nowrap;
-  border-collapse: separate;
-  border-spacing: 0;
-  th {
-    border-bottom: 1px solid #9dc7ff;
-    padding: 0 10px;
-    font-weight: 700;
-  }
-  td {
-    padding: 0 10px;
-  }
 }
