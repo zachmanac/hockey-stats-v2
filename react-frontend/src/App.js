@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.scss';
 import apiCalls from './apiCalls';
 import data from './mockData';
+import DataTable from './components/DataTable';
 
 function App() {
   const [message, setMessage] = useState('');
@@ -62,6 +63,7 @@ function App() {
           </tbody>
         </table>
       </header>
+      <DataTable />
     </div>
   );
 }
