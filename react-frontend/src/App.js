@@ -9,7 +9,7 @@ const supabase = createClient("https://gwqnevtnmqmlqwgyvtqb.supabase.co", "eyJhb
 
 function App() {
   const [message, setMessage] = useState('');
-  const [countries, setCountries] = useState([]);
+  const [players, setPlayers] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,12 +25,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    getCountries();
+    getPlayers();
   }, []);
 
-  async function getCountries() {
-    const { data } = await supabase.from("countries").select();
-    setCountries(data);
+  async function getPlayers() {
+    const { data } = await supabase.from("players").select();
+    setPlayers(data);
   }
 
   return (
@@ -38,8 +38,8 @@ function App() {
       <header className="App-header">
         <p>message here: {message}</p>
         <ul>
-          {countries.map((country) => (
-            <li key={country.name}>{country.name}</li>
+          {players.map((player) => (
+            <li key={player.name}>{player.name}</li>
           ))}
         </ul>
       </header>
