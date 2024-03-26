@@ -70,14 +70,17 @@ export default function DataTable() {
       } else {
         return false;
       }
-    }
-    )
-  }
+    });
+  };
 
   return (
     <div style={{ height: 400, width: '100%' }}>
-      <TextField id="outlined-basic" label="Player Name" variant="outlined" value={nameFilter}
-      onChange={(e) => {setNameFilter(e.target.value)}}
+      <TextField
+        id="outlined-basic"
+        label="Player Name"
+        variant="outlined"
+        value={nameFilter}
+        onChange={(e) => {setNameFilter(e.target.value)}}
       />
       <DataGrid
         rows={displayedRows(rows)}
@@ -92,4 +95,4 @@ export default function DataTable() {
       />
     </div>
   );
-}
+};
