@@ -57,12 +57,12 @@ function App() {
       <header className="App-header">
         <p>message here: {message}</p>
       </header>
-      <DataTable />
-        <ul>
+      <DataTable players={players} />
+        {/* <ul>
           {players.map((player) => (
             <li key={player.player_id}>{player.name}</li>
           ))}
-        </ul>
+        </ul> */}
     </div>
   );
 }
