@@ -1,4 +1,9 @@
+from supabase import create_client, Client
 import requests
+
+url: str = "https://gwqnevtnmqmlqwgyvtqb.supabase.co"
+key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3cW5ldnRubXFtbHF3Z3l2dHFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTEzMzgxNzksImV4cCI6MjAyNjkxNDE3OX0.4rcu3MU6w258JYbjcX2PvtIcVd8xIAmOekJoDeyBYZQ"
+supabase: Client = create_client(url, key)
 
 # n = start condition for list of players
 # change after `seasonId%3E=` for different season
@@ -10,9 +15,46 @@ def fetch_player_data():
         url = f"https://api.nhle.com/stats/rest/en/skater/summary?isAggregate=false&isGame=false&sort=%5B%7B%22property%22:%22points%22,%22direction%22:%22DESC%22%7D,%7B%22property%22:%22goals%22,%22direction%22:%22DESC%22%7D,%7B%22property%22:%22assists%22,%22direction%22:%22DESC%22%7D,%7B%22property%22:%22playerId%22,%22direction%22:%22ASC%22%7D%5D&start={n}&limit=100&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameTypeId=2%20and%20seasonId%3C=20232024%20and%20seasonId%3E=20232024"
         response = requests.get(url)
         if response.status_code == 200:
-            player_data.append(response.json())
+            player_data.extend(response.json()['data'])
         else:
             return {"error": "Unable to fetch player data"}
     return player_data
 
-fetch_player_data()
+def insert_player_data(player_data):
+    for player in player_data:
+
+        player_info = {
+            'player_id': player['playerId'],
+            'name': player['skaterFullName'],
+            'position': player['positionCode']
+        }
+
+        players_data, players_count = supabase.table('players').upsert([player_info]).execute()
+        
+        player_stats = {
+            'player_id': player['playerId'],
+            'games_played': player['gamesPlayed'],
+            'goals': player['goals'],
+            'assists': player['assists'],
+            'points': player['points'],
+            'season_id': player['seasonId'],
+            'ev_goals': player['evGoals'],
+            'ev_points': player['evPoints'],
+            'faceoff_win_percent': player['faceoffWinPct'],
+            'game_winning_goals': player['gameWinningGoals'],
+            'ot_goals': player['otGoals'],
+            'penalty_minutes': player['penaltyMinutes'],
+            'plus_minus': player['plusMinus'],
+            'points_per_game': player['pointsPerGame'],
+            'pp_goals': player['ppGoals'],
+            'pp_points': player['ppPoints'],
+            'sh_goals': player['shGoals'],
+            'sh_points': player['shPoints'],
+            'shooting_percent': player['shootingPct'],
+            'shots': player['shots'],
+            'time_on_ice_per_game': player['timeOnIcePerGame']
+        }
+
+        stats_data, stats_count = supabase.table('player_stats').upsert([player_stats]).execute()
+
+insert_player_data(fetch_player_data())
