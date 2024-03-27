@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.scss';
 import apiCalls from './apiCalls';
-import data from './mockData';
 import DataTable from './components/DataTable';
 import { createClient } from "@supabase/supabase-js";
 

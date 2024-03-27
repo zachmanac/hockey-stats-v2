@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import TextField from '@mui/material/TextField';
-// import data from './mockData';
 
 const columns = [
   { field: 'name', headerName: 'Full Name', width: 160 },
@@ -22,10 +21,8 @@ export default function DataTable({ players }) {
     id: player.player_id,
   }));
 
-  console.log("displayedrows: ", displayedRows);
-
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 630, width: '100%' }}>
       <TextField
         id="outlined-basic"
         label="Player Name"
@@ -33,17 +30,17 @@ export default function DataTable({ players }) {
         value={nameFilter}
         onChange={(e) => {setNameFilter(e.target.value)}}
       />
-      <DataGrid
-        rows={displayedRows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-      />
+        <DataGrid
+          rows={displayedRows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[10, 25]}
+          checkboxSelection
+        />
     </div>
   );
 };
