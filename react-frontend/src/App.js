@@ -12,16 +12,15 @@ function App() {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchDataFromFastAPI() {
       try {
         const response = await apiCalls.getTest();
         setMessage(response.data.message);
-        console.log(response);
       } catch (error) {
         console.error(error);
       }
     }
-    fetchData();
+    fetchDataFromFastAPI();
   }, []);
 
   useEffect(() => {
@@ -29,21 +28,41 @@ function App() {
   }, []);
 
   async function getPlayers() {
-    const { data } = await supabase.from("players").select();
-    setPlayers(data);
+    const { data, error } = await supabase
+    .from("players")
+    .select(`
+      name,
+      position,
+      player_stats (
+        player_id,
+        *
+      )
+    `);
+
+    if(error) {
+      console.error("Error fetching players:", error);
+      return;
+    }
+
+    const flattenedData = data.map(player => {
+      const { player_stats, ...rest } = player;
+      return { ...rest, ...player_stats };
+    });
+
+    setPlayers(flattenedData);
   }
 
   return (
     <div className="App">
       <header className="App-header">
         <p>message here: {message}</p>
-        <ul>
-          {players.map((player) => (
-            <li key={player.name}>{player.name}</li>
-          ))}
-        </ul>
       </header>
       <DataTable />
+        <ul>
+          {players.map((player) => (
+            <li key={player.player_id}>{player.name}</li>
+          ))}
+        </ul>
     </div>
   );
 }

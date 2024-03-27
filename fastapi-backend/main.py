@@ -1,7 +1,7 @@
 import requests
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fetch_player_data import fetch_player_data
+# from fetch_player_data import fetch_player_data
 
 app = FastAPI()
 
@@ -17,10 +17,10 @@ app.add_middleware(
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/fetch_player_data")
-async def fetch():
-    player_data = fetch_player_data()
-    return player_data
+# @app.get("/fetch_player_data")
+# async def fetch():
+#     player_data = fetch_player_data()
+#     return player_data
 
 @app.get("/player/{player_name}")
 async def read_player_stats(player_name: str):
