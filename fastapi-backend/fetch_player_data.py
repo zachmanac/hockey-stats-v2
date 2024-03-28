@@ -5,14 +5,15 @@ url: str = "https://gwqnevtnmqmlqwgyvtqb.supabase.co"
 key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3cW5ldnRubXFtbHF3Z3l2dHFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTEzMzgxNzksImV4cCI6MjAyNjkxNDE3OX0.4rcu3MU6w258JYbjcX2PvtIcVd8xIAmOekJoDeyBYZQ"
 supabase: Client = create_client(url, key)
 
-# n = start condition for list of players
-# change after `seasonId%3E=` for different season
+# range(starting number, max amount of player in hundreds, increment step)
+# change `season_id` for different season
 
 def fetch_player_data():
     player_data = []
+    season_id = 20232024
 
-    for n in range(0, 900, 100):
-        url = f"https://api.nhle.com/stats/rest/en/skater/summary?isAggregate=false&isGame=false&sort=%5B%7B%22property%22:%22points%22,%22direction%22:%22DESC%22%7D,%7B%22property%22:%22goals%22,%22direction%22:%22DESC%22%7D,%7B%22property%22:%22assists%22,%22direction%22:%22DESC%22%7D,%7B%22property%22:%22playerId%22,%22direction%22:%22ASC%22%7D%5D&start={n}&limit=100&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameTypeId=2%20and%20seasonId%3C=20232024%20and%20seasonId%3E=20232024"
+    for n in range(0, 100, 100):
+        url = f"https://api.nhle.com/stats/rest/en/skater/summary?isAggregate=false&isGame=false&sort=%5B%7B%22property%22:%22points%22,%22direction%22:%22DESC%22%7D,%7B%22property%22:%22goals%22,%22direction%22:%22DESC%22%7D,%7B%22property%22:%22assists%22,%22direction%22:%22DESC%22%7D,%7B%22property%22:%22playerId%22,%22direction%22:%22ASC%22%7D%5D&start={n}&limit=100&factCayenneExp=gamesPlayed%3E=1&cayenneExp=gameTypeId=2%20and%20seasonId%3C={season_id}%20and%20seasonId%3E={season_id}"
         response = requests.get(url)
         if response.status_code == 200:
             player_data.extend(response.json()['data'])
@@ -22,6 +23,7 @@ def fetch_player_data():
 
 def insert_player_data(player_data):
     for player in player_data:
+        print("player: ", player)
 
         player_info = {
             'player_id': player['playerId'],

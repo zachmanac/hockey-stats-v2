@@ -57,11 +57,6 @@ function App() {
         <p>message here: {message}</p>
       </header>
       <DataTable players={players} />
-        {/* <ul>
-          {players.map((player) => (
-            <li key={player.player_id}>{player.name}</li>
-          ))}
-        </ul> */}
     </div>
   );
 }
