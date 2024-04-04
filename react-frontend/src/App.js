@@ -27,7 +27,7 @@ function App() {
   }, []);
 
   async function getPlayers() {
-    const { data, error } = await supabase.rpc('get_player_stats_for_season_20222023')
+    const { data, error } = await supabase.rpc('get_player_stats_for_season_20222023');
 
     if(error) {
       console.error("Error fetching players:", error);
