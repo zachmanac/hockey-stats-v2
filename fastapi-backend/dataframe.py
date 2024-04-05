@@ -7,6 +7,7 @@ key: str = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI
 def create_dataframe(supabase_url, supabase_key):
 
   supabase: Client = create_client(supabase_url, supabase_key)
+
   merged_dfs = []
 
   for season_id in range(20052006, 20222023, 10001):
@@ -15,7 +16,6 @@ def create_dataframe(supabase_url, supabase_key):
     player_stats = supabase.table('player_stats') \
       .select('*') \
       .eq('season_id', season_id) \
-      .order('points', desc=True) \
       .limit(1005) \
       .execute()
 
@@ -33,7 +33,10 @@ def create_dataframe(supabase_url, supabase_key):
     merged_dfs.append(merged_df)
     
   final_df = pd.concat(merged_dfs, ignore_index=True)
-  return final_df
+  
+  sorted_final_df = final_df.sort_values(by=['season_id', 'points', 'goals', 'assists'], ascending=[False, False, False, False])
+
+  return sorted_final_df
     
 df = create_dataframe(url, key)
 
