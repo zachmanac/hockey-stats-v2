@@ -8,7 +8,9 @@ const columns = [
   { field: 'games_played', headerName: 'Games Played', type: 'number', width: 150 },
   { field: 'goals', headerName: 'Goals', type: 'number', width: 100 },
   { field: 'assists', headerName: 'Assists', type: 'number', width: 100 },
-  { field: 'points', headerName: 'Points', type: 'number', width: 100 },
+  { field: 'points', headerName: 'Points', type: 'number', width: 100,
+    valueGetter: (value, row) => ((row.goals || 0 )+ (row.assists || 0))
+  }
 ];
 
 export default function DataTable({ players }) {
@@ -16,10 +18,18 @@ export default function DataTable({ players }) {
 
   const displayedRows = players.filter((player) => 
   `${player.name}`.toLowerCase().includes(nameFilter.toLowerCase())
-  ).map((player) => ({
-    ...player,
-    id: player.player_id,
-  }));
+  ).map((player) => {
+    console.log(player);
+    return {
+    name: player.name,
+    position: player.position,
+    games_played: player.predicted_games_played,
+    goals: player.predicted_goals,
+    assists: player.predicted_assists,
+    points: (player.goals || 0) + (player.assists || 0),
+    id: player.player_id
+    };
+  });
 
   return (
     <div style={{ height: 630, width: '100%' }}>
